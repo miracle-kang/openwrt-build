@@ -1,3 +1,3 @@
 #!/bin/bash
 
-make -j$(NPROC) V=s
+make -j$NPROC V=s

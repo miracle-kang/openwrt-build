@@ -27,12 +27,12 @@ RUN chmod +x ./customize.sh && ./customize.sh \
 
 # Download package
 RUN cd openwrt \
-  && make download -j$(NPROC) \
+  && make download -j$NPROC \
   && find dl -size -1024c -exec ls -l {} \; \
   && find dl -size -1024c -exec rm -f {} \;
 
 # Post Package
 COPY ./build.sh /openwrt/
-RUN chmox +x /openwrt/build.sh
+RUN chmod +x /openwrt/build.sh
 VOLUME /openwrt/bin/
 WORKDIR /openwrt
