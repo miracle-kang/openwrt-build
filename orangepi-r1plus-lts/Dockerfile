@@ -1,5 +1,8 @@
 FROM ubuntu:latest
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
+
 # Add dependencies
 RUN apt update -y && \
     apt install -y build-essential ccache ecj fastjar file g++ gawk \
