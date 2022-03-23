@@ -1,6 +1,7 @@
 FROM alpine:latest
 
-ARG NPROC=$(nproc)
+ARG NPROC
+ENV NPROC=${NPROC:-$(nproc)}
 
 # Add dependencies
 RUN apk add asciidoc bash bc binutils bzip2 cdrkit coreutils diffutils \
@@ -27,7 +28,7 @@ RUN chmod +x ./customize.sh && ./customize.sh \
 
 # Download package
 RUN cd openwrt \
-  && make download -j$NPROC \
+  && make download -j${NPROC} \
   && find dl -size -1024c -exec ls -l {} \; \
   && find dl -size -1024c -exec rm -f {} \;
 
