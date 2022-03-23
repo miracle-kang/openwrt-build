@@ -21,7 +21,7 @@ RUN cd openwrt && ./scripts/feeds update -a \
 
 # Configuration Customization
 COPY .config openwrt/.config
-COPY ./customize.sh /
+COPY ../customize.sh /
 RUN chmod +x ./customize.sh && ./customize.sh \
   && cd openwrt && make defconfig
 
@@ -32,7 +32,7 @@ RUN cd openwrt \
   && find dl -size -1024c -exec rm -f {} \;
 
 # Post Package
-COPY ./build.sh /openwrt/
+COPY ../build.sh /openwrt/
 RUN chmox +x /openwrt/build.sh
 VOLUME /openwrt/bin/
 WORKDIR /openwrt
