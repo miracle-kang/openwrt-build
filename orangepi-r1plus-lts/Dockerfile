@@ -1,10 +1,12 @@
-FROM alpine:latest
+FROM ubuntu:latest
 
 # Add dependencies
-RUN apk add asciidoc bash bc binutils bzip2 cdrkit coreutils diffutils \
-findutils flex g++ gawk gcc gettext git grep intltool libxslt \
-linux-headers make ncurses-dev openssl-dev patch perl python2-dev \
-python3-dev rsync tar unzip util-linux wget zlib-dev
+RUN apt update && \
+    apt install build-essential ccache ecj fastjar file g++ gawk \
+        gettext git java-propose-classpath libelf-dev libncurses5-dev \
+        libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget \
+        python3-distutils python3-setuptools python3-dev rsync subversion \
+        swig time xsltproc zlib1g-dev 
 
 # OpenWRT build root
 RUN git clone https://github.com/orangepi-xunlong/openwrt.git \
