@@ -4,16 +4,12 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
 
 # Add dependencies
-RUN apt-get update -y && \
-    apt-get install -y build-essential asciidoc binutils bzip2 gawk gettext git \
-      libncurses5-dev patch python3 python2.7 unzip zlib1g-dev lib32gcc1 \
-      libc6-dev-i386 subversion flex node-uglify git gcc-multilib p7zip \
-      p7zip-full msmtp libssl-dev texinfo libglib2.0-dev xmlto qemu-utils \
-      upx-ucl libelf-dev autoconf automake libtool autopoint device-tree-compiler \
-      g++-multilib antlr3 gperf wget curl swig rsync coreutils gcc-8 gcc++-8 \
-      gcc-8-multilib libreadline-dev ccache curl wget vim nano python python3 \
-      python-pip python3-pip python-ply python3-ply haveged lrzsz scons ecj \
-      fastjar re2c xz-utils tar && \
+RUN apt update -y && \
+    apt install -y build-essential ccache ecj fastjar file g++ gawk \
+      gettext git java-propose-classpath libelf-dev libncurses5-dev \
+      libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget \
+      python3-distutils python3-setuptools python3-dev rsync subversion \
+      swig time xsltproc zlib1g-dev upx  && \
     apt-get -y autoremove purge && \
     apt-get clean
 
