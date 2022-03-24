@@ -32,7 +32,7 @@ RUN cd openwrt && \
 
 # Configuration Customization
 COPY .config openwrt/.config
-COPY ./customize.sh ~/
+COPY customize.sh customize.sh
 RUN chmod +x ./customize.sh && ./customize.sh \
   && cd openwrt && make defconfig
 
