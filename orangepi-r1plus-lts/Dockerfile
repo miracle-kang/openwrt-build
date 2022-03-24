@@ -31,8 +31,8 @@ RUN cd openwrt && \
   git clone https://github.com/kuoruan/openwrt-v2ray.git package/v2ray-core
 
 # Configuration Customization
-COPY .config openwrt/.config
-COPY customize.sh customize.sh
+COPY --chown=user .config openwrt/.config
+COPY --chown=user customize.sh customize.sh
 RUN chmod +x ./customize.sh && ./customize.sh \
   && cd openwrt && make defconfig
 
@@ -43,6 +43,6 @@ RUN cd openwrt \
   && find dl -size -1024c -exec rm -f {} \;
 
 # Post Package
-COPY ./build.sh openwrt/
+COPY --chown=user ./build.sh openwrt/
 RUN chmod +x openwrt/build.sh
 VOLUME /home/user/openwrt/bin/
