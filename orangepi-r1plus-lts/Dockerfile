@@ -45,4 +45,3 @@ RUN cd openwrt \
 # Post Package
 COPY --chown=user ./build.sh openwrt/
 RUN chmod +x openwrt/build.sh
-VOLUME /home/user/openwrt/bin/
