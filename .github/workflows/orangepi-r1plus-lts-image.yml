@@ -24,6 +24,6 @@ jobs:
       env:
         TAG_NAME: orangepi-r1plus-lts
       run: |
-        docker build ./orangepi-r1plus-lts --file Dockerfile --tag ${{ env.IMAGE_NAME }}:$TAG_NAME
+        docker build . --file orangepi-r1plus-lts/Dockerfile --tag ${{ env.IMAGE_NAME }}:$TAG_NAME
         docker login -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_TOKEN }}
         docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$TAG_NAME
