@@ -10,8 +10,8 @@ RUN apt update -y && \
       libncursesw5-dev libssl-dev python python2.7-dev python3 unzip wget \
       python3-distutils python3-setuptools python3-dev rsync subversion \
       swig time xsltproc zlib1g-dev upx  && \
-    apt-get -y autoremove purge && \
-    apt-get clean
+    apt -y autoremove --purge && \
+    apt clean
 
 # OpenWRT build root
 RUN git clone --depth 1 https://github.com/orangepi-xunlong/openwrt.git -b openwrt-21.02 openwrt \
