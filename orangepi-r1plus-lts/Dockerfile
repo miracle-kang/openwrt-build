@@ -14,7 +14,7 @@ RUN apt update -y && \
     apt clean
 
 # OpenWRT build root
-RUN git clone --depth 1 https://github.com/orangepi-xunlong/openwrt.git -b openwrt-21.02 openwrt \
+RUN git clone --depth 1 https://github.com/orangepi-xunlong/openwrt.git -b openwrt-21.02 openwrt
 
 # Update the feeds
 RUN cd openwrt && ./scripts/feeds update -a \
