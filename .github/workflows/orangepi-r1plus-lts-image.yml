@@ -11,6 +11,7 @@ env:
   REGISTRY: docker.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
+  TAG_NAME: orangepi-r1plus-lts
 
 jobs:
 
@@ -21,9 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      env:
-        TAG_NAME: orangepi-r1plus-lts
       run: |
-        docker build ./orangepi-r1plus-lts --file orangepi-r1plus-lts/Dockerfile --tag ${{ env.IMAGE_NAME }}:$TAG_NAME
+        docker build ./orangepi-r1plus-lts --file orangepi-r1plus-lts/Dockerfile --tag ${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
         docker login -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$TAG_NAME
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
