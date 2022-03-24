@@ -11,7 +11,12 @@ RUN apt update -y && \
       python3-distutils python3-setuptools python3-dev rsync subversion \
       swig time xsltproc zlib1g-dev upx  && \
     apt -y autoremove --purge && \
-    apt clean
+    apt clean && \
+    useradd -m user && \
+    echo 'user ALL=NOPASSWD: ALL' > /etc/sudoers.d/user
+
+USER user
+WORKDIR /home/user
 
 # OpenWRT build root
 RUN git clone --depth 1 https://github.com/orangepi-xunlong/openwrt.git -b openwrt-21.02 openwrt
@@ -27,7 +32,7 @@ RUN cd openwrt && \
 
 # Configuration Customization
 COPY .config openwrt/.config
-COPY ./customize.sh /
+COPY ./customize.sh ~/
 RUN chmod +x ./customize.sh && ./customize.sh \
   && cd openwrt && make defconfig
 
@@ -38,7 +43,6 @@ RUN cd openwrt \
   && find dl -size -1024c -exec rm -f {} \;
 
 # Post Package
-COPY ./build.sh /openwrt/
-RUN chmod +x /openwrt/build.sh
-VOLUME /openwrt/bin/
-WORKDIR /openwrt
+COPY ./build.sh openwrt/
+RUN chmod +x openwrt/build.sh
+VOLUME /home/user/openwrt/bin/
