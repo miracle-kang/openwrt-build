@@ -1,0 +1,29 @@
+name: Build OrangePi R1Plus LTS Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: docker.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      env:
+        TAG_NAME: orangepi-r1plus-lts
+      run: |
+        docker build ./orangepi-r1plus-lts --file Dockerfile --tag ${{ env.IMAGE_NAME }}:$TAG_NAME
+        docker login -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$TAG_NAME
