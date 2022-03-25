@@ -2,6 +2,7 @@ FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Shanghai
+ENV GOPROXY=https://proxy.golang.com.cn,direct
 
 # Add dependencies
 RUN apt update -y && \
