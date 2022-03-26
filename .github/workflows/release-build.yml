@@ -1,0 +1,33 @@
+name: Release CI
+
+on:
+  release:
+    types: [published]
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: docker.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+  TAG_NAME: orangepi-r1plus-lts
+
+jobs:
+
+  release:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Run the Docker image to build openwrt
+      run: |
+        docker run -t --name openwrt-build ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} bash -c 'cd openwrt && ./build.sh'
+        docker cp openwrt-build:/home/user/openwrt/bin ./openwrt-bin
+        
+    - name: Release and Upload Assets
+      uses: actions/upload-artifact@v3.0.0
+      with:
+        name: openwrt-bin
+        path: ./openwrt-bin
