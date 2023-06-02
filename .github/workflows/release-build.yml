@@ -5,8 +5,8 @@ on:
     types: [published]
 
 env:
-  # Use docker.io for Docker Hub if empty
-  REGISTRY: docker.io
+  # Use ghcr.io for Docker Hub if empty
+  REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
   TAG_NAME: orangepi-r1plus-lts
@@ -23,6 +23,7 @@ jobs:
       
     - name: Run the Docker image to build openwrt
       run: |
+        echo "$GITHUB_TOKEN" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
         docker run -t --name openwrt-build ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} bash -c 'cd openwrt && ./build.sh'
         docker cp openwrt-build:/home/user/openwrt/bin ./openwrt-bin
         
