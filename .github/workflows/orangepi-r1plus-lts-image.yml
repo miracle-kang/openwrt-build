@@ -39,5 +39,4 @@ jobs:
           context: ./orangepi-r1plus-lts
           push: true
           tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:22.03
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
