@@ -18,17 +18,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       
-    - name: Run the Docker image to build openwrt
-      run: |
-        echo "$GITHUB_TOKEN" | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
-        docker run -t --name openwrt-build ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} bash -c 'cd openwrt && ./build.sh'
-        docker cp openwrt-build:/home/user/openwrt/bin ./openwrt-bin
-        
-    - name: Release and Upload Assets
-      uses: actions/upload-artifact@v3.0.0
-      with:
-        name: openwrt-bin
-        path: ./openwrt-bin
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run the Docker image to build openwrt
+        run: |
+          docker run -t --name openwrt-build ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }} bash -c 'cd openwrt && ./build.sh'
+          docker cp openwrt-build:/home/user/openwrt/bin ./openwrt-bin
+          
+      - name: Release and Upload Assets
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: openwrt-bin
+          path: ./openwrt-bin
